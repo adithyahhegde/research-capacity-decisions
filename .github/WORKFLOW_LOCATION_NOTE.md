@@ -1,0 +1,1 @@
+The executable research workflow is intentionally stored at the repository root under `.github/workflows/research-capacity-decisions.yml`, because GitHub only discovers workflow files from the root `.github/workflows` directory.
