@@ -1,0 +1,45 @@
+name: Research experiment
+
+on:
+  push:
+    paths:
+      - 'research-capacity-decisions/**'
+  workflow_dispatch:
+    inputs:
+      full_run:
+        description: 'Run the full configured study period instead of the smoke test'
+        required: false
+        default: false
+        type: boolean
+
+permissions:
+  contents: read
+
+jobs:
+  analysis:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    defaults:
+      run:
+        working-directory: research-capacity-decisions
+    env:
+      FULL_RUN: ${{ github.event_name == 'workflow_dispatch' && inputs.full_run || '0' }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+          cache-dependency-path: research-capacity-decisions/requirements.txt
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+      - name: Run analysis
+        run: python analysis/run_analysis.py
+      - name: Upload research outputs
+        uses: actions/upload-artifact@v4
+        with:
+          name: capacity-decision-results
+          path: research-capacity-decisions/results/
+          if-no-files-found: error
