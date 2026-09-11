@@ -1,0 +1,45 @@
+name: Full-Year Capacity Decision Study
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+      - name: Clean prior results
+        run: rm -rf research_capacity/results && mkdir -p research_capacity/results
+      - name: Run full 2024 analysis
+        run: python research_capacity/run_full_year.py
+      - name: Verify artifact contents
+        run: |
+          python - <<'PY'
+          import json, pandas as pd
+          from pathlib import Path
+          out=Path('research_capacity/results')
+          h=pd.read_csv(out/'hourly_demand_2024.csv', parse_dates=['hour'])
+          s=json.loads((out/'full_year_summary.json').read_text())
+          assert h['hour'].min() >= pd.Timestamp('2024-01-01')
+          assert h['hour'].max() < pd.Timestamp('2025-01-01')
+          assert int(h['demand'].sum()) == int(s['total_trips_aggregated'])
+          p=pd.read_csv(out/'test_predictions_2024.csv', parse_dates=['hour'])
+          assert p['hour'].min() >= pd.Timestamp('2024-01-01')
+          assert p['hour'].max() < pd.Timestamp('2025-01-01')
+          print('artifact verification passed')
+          print('hourly:', h['hour'].min(), h['hour'].max(), 'trips:', int(h['demand'].sum()))
+          print('predictions:', p['hour'].min(), p['hour'].max(), 'rows:', len(p))
+          PY
+      - name: Upload empirical results
+        uses: actions/upload-artifact@v4
+        with:
+          name: full-year-capacity-results
+          path: research_capacity/results/
