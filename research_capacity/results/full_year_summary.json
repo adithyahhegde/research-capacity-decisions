@@ -1,0 +1,36 @@
+{
+  "months": 12,
+  "zones": 20,
+  "date_min": "2024-01-01 00:00:00",
+  "date_max": "2024-12-31 23:00:00",
+  "total_trips_aggregated": 41169664,
+  "validation_mean": {
+    "Random Forest": {"MAE": 18.1398, "RMSE": 27.0301, "sMAPE": 18.947},
+    "Ridge": {"MAE": 21.4478, "RMSE": 30.4801, "sMAPE": 28.24},
+    "Seasonal Naive": {"MAE": 27.3602, "RMSE": 43.4776, "sMAPE": 25.6432},
+    "XGBoost": {"MAE": 17.723, "RMSE": 26.5687, "sMAPE": 18.7536}
+  },
+  "test_mean": {
+    "Random Forest": {"MAE": 21.3971, "RMSE": 32.157, "sMAPE": 20.4225},
+    "Ridge": {"MAE": 25.8602, "RMSE": 37.2084, "sMAPE": 28.8084},
+    "XGBoost": {"MAE": 20.6204, "RMSE": 30.7783, "sMAPE": 20.1938}
+  },
+  "best_operational": [
+    {"model": "Random Forest", "buffer": 0.0, "under_over_ratio": 1, "mean_cost": 21.438399071925755, "under_rate": 0.4322795823665893},
+    {"model": "Random Forest", "buffer": 0.1, "under_over_ratio": 3, "mean_cost": 35.78222157772622, "under_rate": 0.2370939675174014},
+    {"model": "Random Forest", "buffer": 0.1, "under_over_ratio": 5, "mean_cost": 45.132105568445475, "under_rate": 0.2370939675174014},
+    {"model": "Random Forest", "buffer": 0.2, "under_over_ratio": 10, "mean_cost": 58.07424593967517, "under_rate": 0.12465197215777263},
+    {"model": "Ridge", "buffer": 0.0, "under_over_ratio": 1, "mean_cost": 25.85672853828306, "under_rate": 0.4121519721577726},
+    {"model": "Ridge", "buffer": 0.1, "under_over_ratio": 3, "mean_cost": 42.558816705336426, "under_rate": 0.24950696055684454},
+    {"model": "Ridge", "buffer": 0.1, "under_over_ratio": 5, "mean_cost": 53.80295823665893, "under_rate": 0.24950696055684454},
+    {"model": "Ridge", "buffer": 0.2, "under_over_ratio": 10, "mean_cost": 68.9504060324826, "under_rate": 0.1498259860788863},
+    {"model": "Seasonal Naive", "buffer": 0.0, "under_over_ratio": 1, "mean_cost": 39.300174013921115, "under_rate": 0.46360208816705334},
+    {"model": "Seasonal Naive", "buffer": 0.1, "under_over_ratio": 3, "mean_cost": 66.95055104408353, "under_rate": 0.31841647331786543},
+    {"model": "Seasonal Naive", "buffer": 0.2, "under_over_ratio": 5, "mean_cost": 86.13633990719258, "under_rate": 0.2245939675174014},
+    {"model": "Seasonal Naive", "buffer": 0.3, "under_over_ratio": 10, "mean_cost": 120.55977378190255, "under_rate": 0.16241299303944315},
+    {"model": "XGBoost", "buffer": 0.0, "under_over_ratio": 1, "mean_cost": 20.66316705336427, "under_rate": 0.43631090487238977},
+    {"model": "XGBoost", "buffer": 0.1, "under_over_ratio": 3, "mean_cost": 34.48526682134571, "under_rate": 0.23642691415313224},
+    {"model": "XGBoost", "buffer": 0.1, "under_over_ratio": 5, "mean_cost": 43.37824825986079, "under_rate": 0.23642691415313224},
+    {"model": "XGBoost", "buffer": 0.2, "under_over_ratio": 10, "mean_cost": 55.48291763341067, "under_rate": 0.12311484918793504}
+  ]
+}
